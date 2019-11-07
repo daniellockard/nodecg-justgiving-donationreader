@@ -5,3 +5,5 @@ nodecg-justgiving.
 
 It shows donations in both the charity's preferred currency, in parentheses
 after the donation amount, and the donors donation amount and currency.
+
+![dr](dr.png)
