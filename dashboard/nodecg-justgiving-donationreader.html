@@ -42,8 +42,10 @@
   <body>
     <div class="col-sm-12" id="donations"></div>
     <script>
+      /*global nodecg*/
+      /*eslint no-unused-vars: ["error", { "argsIgnorePattern": "^_" }]*/
       var donationRep = nodecg.Replicant("donations", "nodecg-justgiving");
-      donationRep.on("change", function(newvalue, oldvalue) {
+      donationRep.on("change", function(newvalue, _oldvalue) {
         $("#donations").empty();
         for (let i = 0; i < newvalue.length; i++) {
           if (newvalue[i].read) {
