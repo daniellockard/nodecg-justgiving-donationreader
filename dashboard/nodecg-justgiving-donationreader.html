@@ -67,13 +67,23 @@
             row
               .find("#name")
               .text(
-                `${newvalue[i].donorDisplayName} Donated ${charityCurrencySymbol}${formattedNumber(newvalue[i].amount)}`
+                `${
+                  newvalue[i].donorDisplayName
+                } Donated ${charityCurrencySymbol}${formattedNumber(
+                  newvalue[i].amount
+                )}`
               );
           } else {
             row
               .find("#name")
               .text(
-                `${newvalue[i].donorDisplayName} Donated ${donorCurrencySymbol}${formattedNumber(newvalue[i].donorLocalAmount)} (${charityCurrencySymbol}${formattedNumber(newvalue[i].amount)})`
+                `${
+                  newvalue[i].donorDisplayName
+                } Donated ${donorCurrencySymbol}${formattedNumber(
+                  newvalue[i].donorLocalAmount
+                )} (${charityCurrencySymbol}${formattedNumber(
+                  newvalue[i].amount
+                )})`
               );
           }
           if (newvalue[i].message !== "") {
@@ -110,7 +120,9 @@
       }
 
       function formattedNumber(number) {
-        return Number(number).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        return Number(number)
+          .toFixed(2)
+          .replace(/\d(?=(\d{3})+\.)/g, "$&,");
       }
     </script>
   </body>
