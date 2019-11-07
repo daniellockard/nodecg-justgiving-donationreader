@@ -1,0 +1,19 @@
+{
+  "name": "nodecg-justgiving-donationreader",
+  "version": "0.0.0",
+  "nodecg": {
+    "dashboardPanels": [
+      {
+        "name": "nodecg-justgiving-donationreader",
+        "title": "JustGiving Donation Reader",
+        "file": "nodecg-justgiving-donationreader.html",
+        "fullbleed": true,
+        "headerColor": "#525F78"
+      }
+    ],
+    "bundleDependencies": {
+      "nodecg-justgiving": "^0.0.0"
+    },
+    "compatibleRange": "^1.1.1"
+  }
+}

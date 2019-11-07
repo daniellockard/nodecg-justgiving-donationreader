@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      .monospace {
+        font-family: monospace;
+      }
+      .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+      }
+      .container {
+        padding: 2px 16px;
+      }
+      .teal,
+      .hover-teal:hover {
+        color: #fff !important;
+        background-color: #009688 !important;
+      }
+      .btn,
+      .button {
+        border: none;
+        display: inline-block;
+        padding: 8px 16px;
+        vertical-align: middle;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        background-color: inherit;
+        text-align: center;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .block {
+        display: block;
+        width: 100%;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+  </head>
+  <body>
+    <div class="col-sm-12" id="donations"></div>
+    <script>
+      var donationRep = nodecg.Replicant("donations", "nodecg-justgiving");
+      donationRep.on("change", function(newvalue, oldvalue) {
+        $("#donations").empty();
+        for (let i = 0; i < newvalue.length; i++) {
+          if (newvalue[i].read) {
+            continue;
+          }
+          $("#donations").append(
+            '<div class="card" id="donation-row-' +
+              newvalue[i].id +
+              '"><div class="container" style="border: rgb(82, 95, 120); border-radius: 12px; border-style: groove;"><h2 id="name"></h2><p id="message"></p><p><button class="btn teal block" id="button-' +
+              newvalue[i].id +
+              '" href="#" role="button">Mark as read</button></p></div></div>'
+          );
+          const row = $("#donation-row-" + newvalue[i].id);
+          const charityCurrencySymbol = findAmountSymbol(
+            newvalue[i].currencyCode
+          );
+          const donorCurrencySymbol = findAmountSymbol(
+            newvalue[i].donorLocalCurrencyCode
+          );
+          if (charityCurrencySymbol === donorCurrencySymbol) {
+            row
+              .find("#name")
+              .text(
+                `${newvalue[i].donorDisplayName} Donated ${charityCurrencySymbol}${formattedNumber(newvalue[i].amount)}`
+              );
+          } else {
+            row
+              .find("#name")
+              .text(
+                `${newvalue[i].donorDisplayName} Donated ${donorCurrencySymbol}${formattedNumber(newvalue[i].donorLocalAmount)} (${charityCurrencySymbol}${formattedNumber(newvalue[i].amount)})`
+              );
+          }
+          if (newvalue[i].message !== "") {
+            row.find("#message").text(newvalue[i].message);
+          } else {
+            row.find("#message").text("No Message");
+          }
+          row.find("#button-" + newvalue[i].id).click(function() {
+            row.remove();
+            newvalue[i].read = true;
+          });
+        }
+      });
+
+      function findAmountSymbol(currencyCode) {
+        var currency_symbols = {
+          USD: "$", // US Dollar
+          EUR: "€", // Euro
+          CRC: "₡", // Costa Rican Colón
+          GBP: "£", // British Pound Sterling
+          ILS: "₪", // Israeli New Sheqel
+          INR: "₹", // Indian Rupee
+          JPY: "¥", // Japanese Yen
+          KRW: "₩", // South Korean Won
+          NGN: "₦", // Nigerian Naira
+          PHP: "₱", // Philippine Peso
+          PLN: "zł", // Polish Zloty
+          PYG: "₲", // Paraguayan Guarani
+          THB: "฿", // Thai Baht
+          UAH: "₴", // Ukrainian Hryvnia
+          VND: "₫" // Vietnamese Dong
+        };
+        return currency_symbols[currencyCode];
+      }
+
+      function formattedNumber(number) {
+        return Number(number).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+      }
+    </script>
+  </body>
+</html>
