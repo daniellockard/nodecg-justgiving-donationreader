@@ -17,7 +17,7 @@
     "compatibleRange": "^1.1.1"
   },
   "devDependencies": {
-    "eslint": "^6.6.0",
-    "eslint-plugin-html": "^6.0.0"
+    "eslint": "^7.11.0",
+    "eslint-plugin-html": "^6.1.0"
   }
 }
